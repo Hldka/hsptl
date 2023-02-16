@@ -31,4 +31,5 @@ public class DoctorDTO {
         this.dateOfStart = doctor.getDateOfStart();
         this.personalNo=doctor.getPersonalNo();
     }
+
 }
