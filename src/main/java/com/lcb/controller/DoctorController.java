@@ -1,5 +1,7 @@
 package com.lcb.controller;
 
+
+
 import com.lcb.domain.Doctor;
 import com.lcb.dto.DoctorDTO;
 import com.lcb.exception.ConflictException;
@@ -11,7 +13,9 @@ import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
+
 
 @RestController
 @RequestMapping("/doctors")
@@ -19,42 +23,49 @@ public class DoctorController {//http://localhost:8080/doctors
     @Autowired
     private DoctorService doctorService;
 
-    @PostMapping("/save")
-    public ResponseEntity<Map<String, String>> saveDoctor(@Valid @RequestBody Doctor doctor)  {
+    // dr ekle
+@PostMapping
+public ResponseEntity<String> saveDoctor(@Valid @RequestBody Doctor doctor){
+    doctorService.saveDoctor(doctor);
+    return ResponseEntity.ok("creating successfull");
+}
+//bütün dr getir
 
-        doctorService.saveDoctor(doctor);
-        Map<String, String> map = new HashMap<>();
-        map.put("message", "Doctor is saved succesfully.");
-        map.put("Status", "true");
-        return new ResponseEntity(map, HttpStatus.CREATED);
+
+
+  @GetMapping("/List")
+  public ResponseEntity<List<Doctor>> getAllList(){
+    List<Doctor> list=doctorService.getAllList();
+    return ResponseEntity.ok(list);
+  }
+  //Id ile görüntüleme
+    @GetMapping("/{id}")
+    public ResponseEntity<Doctor> getDoctorById(@PathVariable("id") Long id){
+    Doctor doctor=doctorService.findDoctor(id);
+    return ResponseEntity.ok(doctor);
     }
 
-/*
-    // !!! Delete
-    @DeleteMapping("/{id}") // http://localhost:8080/doctors/1  + DELETE icine "/{id}" yazmak zorundayim @Pathvariable kullaniyorsam
-    public ResponseEntity<Map<String,String>> deleteDoctor(@PathVariable("id") Long id) {
 
+//dr sil
+    @DeleteMapping("/{id}")
+    public ResponseEntity<String> deleteDoctor(@PathVariable("id") Long id){
         doctorService.deleteDoctor(id);
+        return ResponseEntity.ok("Doctor deleted successfully");
+    }
 
+    //dr güncelle
+    @PutMapping("{id}")
+    public ResponseEntity<Map<String,String>> updateDoctor(@PathVariable("id")Long id,
+                                                           @Valid @RequestBody DoctorDTO doctorDTO){
+    doctorService.updateDoctor(id,doctorDTO);
         Map<String,String> map = new HashMap<>();
-        map.put("message","Student is deleted successfuly");
+        map.put("message","Doctor is updated successfuly");
         map.put("status" ,"true");
 
-        return new ResponseEntity<>(map, HttpStatus.OK); // return ResponseEntity.ok(map);
+        return new ResponseEntity<>(map, HttpStatus.OK);
     }
 
 
-
-//!!!update
-    @PutMapping("{id}")
-    public ResponseEntity<Map<String,String>> updateDoctor(@PathVariable("id") Long id ,@Valid @RequestBody DoctorDTO doctorDTO) throws ConflictException {
-doctorService.updateDoctor(id,doctorDTO);
-Map<String,String>map=new HashMap<>();
-map.put("message","Doctor is updated successful");
-map.put("status","true");
-return new ResponseEntity<>(map, HttpStatus.OK);
-
-    }}
-*/
-
 }
+
+

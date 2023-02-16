@@ -1,46 +1,60 @@
 package com.lcb.service;
+
 import com.lcb.domain.Doctor;
+
+
 import com.lcb.dto.DoctorDTO;
 import com.lcb.exception.ConflictException;
+import com.lcb.exception.ResourceNotFoundException;
 import com.lcb.repository.DoctorRepository;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Service;
+
+import java.util.List;
 
 @Service
 public class DoctorService {
-    @Autowired
-    private DoctorRepository doctorRepository;
-    public void saveDoctor(Doctor doctor)  {
 
-        boolean isExistDoctor = doctorRepository.existByName(doctor.getName());
-        if (isExistDoctor) {
-            throw new ConflictException("Doctor is already exists by personal number!" + doctor.getName());
+@Autowired
+private DoctorRepository doctorRepository;
+    public void deleteDoctor(Long id) {
+        Doctor doctor=doctorRepository.findById(id).
+                orElseThrow(()->new ResourceNotFoundException("Doctor not found"));
+        doctorRepository.delete(doctor);
+
+
+    }
+
+
+    public void saveDoctor(Doctor doctor) {
+        if (doctorRepository.existsByPersonalNo(doctor.getPersonalNo())){
+            throw new ConflictException("Doctor already exist");
+
         }
         doctorRepository.save(doctor);
     }
 
-/*
-    public void updateDoctor(Long id, DoctorDTO doctorDTO) throws ConflictException {
-        boolean existName=doctorRepository.existsByName(doctorDTO.getName());
-   Doctor doctor=findDoctor(id);
-   if (existName&& !doctorDTO.getName().equals(doctor.getName())){
-       throw new ConflictException("Doctor name already exist");
-   }
-doctor.setDepartment(doctorDTO.getDepartment());
-   doctor.setDateOfStart(doctorDTO.getDateOfStart());
-   doctor.setNamePrefix(doctorDTO.getNamePrefix());
-   doctor.setDateOfGraduate(doctorDTO.getDateOfGraduate());
+
+    public List<Doctor> getAllList() {
+        return doctorRepository.findAll();
     }
 
-
-    //!!!DeLETE
-     public void deleteDoctor(Long id) {
-
-        Doctor doctor = findDoctor(id);// kendimizi tekrar etmemek icin yukardakini kullandik
-        doctorRepository.delete(doctor);
+    public Doctor findDoctor(Long id) {
+        return doctorRepository.findById(id).orElseThrow(()->
+                new ResourceNotFoundException("Doctor is not found"+id));
     }
 
-
-*/
+    public void updateDoctor(Long id, DoctorDTO doctorDTO) {
+        boolean existPersonalNo=doctorRepository.existsByPersonalNo(doctorDTO.getPersonalNo());
+        Doctor doctor=findDoctor(id);
+        if (existPersonalNo&&!doctorDTO.getPersonalNo().equals(doctor.getPersonalNo())){
+            throw new ConflictException("PersonalNo is already exist");
+        }
+        doctor.setName(doctorDTO.getName());
+        doctor.setNamePrefix(doctorDTO.getNamePrefix());
+        doctor.setDepartment(doctorDTO.getDepartment());
+        doctor.setDateOfGraduate(doctorDTO.getDateOfGraduate());
+        doctor.setDateOfStart(doctorDTO.getDateOfStart());
+        doctorRepository.save(doctor);
+    }
 }

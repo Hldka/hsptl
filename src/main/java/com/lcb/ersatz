@@ -1,0 +1,52 @@
+controller
+@GetMapping
+public ResponseEntity<Doctor> getDoctor(@RequestParam("id")Long id){
+    Doctor doctor=doctorService.findDoctor(id);
+    return ResponseEntity.ok(doctor);
+}
+
+       @PutMapping("{id}")
+        public ResponseEntity<Map<String,String>> updateDoctor(@PathVariable("id") Long id , @Valid @RequestBody DoctorDTO doctorDTO) {
+    doctorService.updateDoctor(id,doctorDTO);
+    Map<String,String>map=new HashMap<>();
+    map.put("message","Doctor is updated successful");
+    map.put("status","true");
+    return new ResponseEntity<>(map, HttpStatus.OK);
+
+        }
+
+
+        SERVICE
+
+
+
+            public Doctor findDoctor(Long id){
+                return doctorRepository.findById(id).orElseThrow(  ()->new ResourceNotFoundException("Doctor not found  with Personal id"+id
+                      ));}
+            public void updateDoctor(Long id, DoctorDTO doctorDTO) {
+                boolean existEmail = doctorRepository.existByPersonalNo(doctorDTO.getPersonalNo());
+                Doctor doctor = findDoctor(id);
+
+                if( existEmail && ! doctorDTO.getPersonalNo().equals(doctor.getPersonalNo()) ) {
+                    throw new ConflictException("Doctor is already exist ");
+                    /*
+                    1.senaryo =  kendi email : mrc , mrc  -->  TRUE && FALSE  ( UPDATE OLUR )
+                    2.senaryo = kendi email : mrc , ahmt ve DB de zaten var --> TRUE && TRUE ( UPDATE OLMAZ )
+                    3.senaryo = kendi email : mrc, mhmt ama DB de yok  ---> FALSE && TRUE ( UPDATE OLUR )
+                     */
+                }
+
+                doctor.setName(doctorDTO.getName());
+               doctor.setNamePrefix(doctorDTO.getNamePrefix());
+               doctor.setDepartment(doctorDTO.getDepartment());
+               doctor.setDateOfStart(doctorDTO.getDateOfStart());
+               doctor.setDateOfGraduate(doctorDTO.getDateOfGraduate());
+        doctorRepository.save(doctor);
+
+
+            }
+
+            Repository
+             boolean existByName(String name);
+
+                boolean existByPersonalNo(String personalNo);
