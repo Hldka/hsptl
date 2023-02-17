@@ -10,6 +10,7 @@ spring:
     url: jdbc:postgresql://localhost:5432/hsptl_db
     username: db_user
     password: db_password
+
   security:
     user:
       name: name
