@@ -1,11 +1,10 @@
 package com.lcb.controller;
 
+import com.lcb.domain.Doctor;
+import com.lcb.dto.DoctorDTO;
 import com.lcb.service.DoctorService;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.DeleteMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 @RestController
 @RequestMapping("/doctors")
@@ -20,5 +19,9 @@ public class DoctorController {
     public ResponseEntity<String> deleteDoctor(@PathVariable("id") Long id){
         doctorService.deleteDoctor(id);
         return ResponseEntity.ok("Doctor deleted successfully");
+    }
+    @PutMapping("/{id}")
+    public <DoctorDto> Doctor updateDoctor(@PathVariable Long id, @RequestBody DoctorDTO doctorDTO) {
+        return doctorService.updateDoctor(id, doctorDTO);
     }
 }
