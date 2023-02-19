@@ -15,7 +15,9 @@ public class Doctor {
     @Setter(AccessLevel.NONE)
     private Long id;
     private String name;
+    @Enumerated(EnumType.STRING)
     private NamePrefix namePrefix;//(Dr,Prof,Uzm enum)
+    @Enumerated(EnumType.STRING)
     private Department department; //enum      PEDIATRICIAN,DERMATOGIST,CARDIOLOGISTS
 
     private Integer dateOfGraduate;
