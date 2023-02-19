@@ -20,6 +20,8 @@ public class Patient {
     @Setter(AccessLevel.NONE)
     private Long id;
 
+    @Column(unique = true)
+    private String patientNo;
     @NotNull(message= "Please provide your name")
     @Column(length = 50, nullable = false)
     private String name;
