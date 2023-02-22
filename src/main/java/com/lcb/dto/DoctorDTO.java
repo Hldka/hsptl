@@ -21,15 +21,8 @@ public class DoctorDTO {
 
     private Integer dateOfGraduate;
     private Integer dateOfStart;
-    @Column(unique = true)
+
     private String personalNo;
-    public DoctorDTO(Doctor doctor) {
-        this.name = doctor.getName();
-        this.namePrefix = doctor.getNamePrefix();
-        this.department = doctor.getDepartment();
-        this.dateOfGraduate = doctor.getDateOfGraduate();
-        this.dateOfStart = doctor.getDateOfStart();
-        this.personalNo=doctor.getPersonalNo();
-    }
+
 
 }

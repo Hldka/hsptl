@@ -15,11 +15,19 @@ public class Doctor {
     @Setter(AccessLevel.NONE)
     private Long id;
     private String name;
+    @Enumerated(EnumType.STRING)
     private NamePrefix namePrefix;//(Dr,Prof,Uzm enum)
+    @Enumerated(EnumType.STRING)
     private Department department; //enum      PEDIATRICIAN,DERMATOGIST,CARDIOLOGISTS
-    @Column(unique = true)
-    private String personalNo;
+
     private Integer dateOfGraduate;
     private Integer dateOfStart;
 
+
+    public String getPersonalNo() {
+        return getPersonalNo();
+    }
 }
+
+
+
