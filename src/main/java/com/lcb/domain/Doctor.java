@@ -2,10 +2,7 @@ package com.lcb.domain;
 
 import lombok.*;
 
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
+import javax.persistence.*;
 
 @Getter
 @Setter
@@ -26,4 +23,11 @@ public class Doctor {
     private Integer dateOfGraduate;
     private Integer dateOfStart;
 
+
+    public String getPersonalNo() {
+        return getPersonalNo();
+    }
 }
+
+
+
