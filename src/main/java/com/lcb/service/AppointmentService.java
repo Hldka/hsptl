@@ -3,12 +3,16 @@ package com.lcb.service;
 import com.lcb.domain.Appointment;
 import com.lcb.exception.ResourceNotFoundException;
 import com.lcb.repository.AppointmentRepository;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
 
 @Service
 public class AppointmentService {
+
+  //  @Autowired
+    //private AppointmentRepository appointmentRepository;
 
 
     private final AppointmentRepository appointmentRepository;

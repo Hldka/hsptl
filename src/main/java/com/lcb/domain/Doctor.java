@@ -22,12 +22,6 @@ public class Doctor {
 
     private Integer dateOfGraduate;
     private Integer dateOfStart;
-
-
-    public String getPersonalNo() {
-        return getPersonalNo();
-    }
+    @Column(unique = true)
+    private String personalNo;
 }
-
-
-

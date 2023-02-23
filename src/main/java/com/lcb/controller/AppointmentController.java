@@ -3,6 +3,7 @@ package com.lcb.controller;
 
 import com.lcb.domain.Appointment;
 import com.lcb.service.AppointmentService;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
@@ -12,7 +13,8 @@ import java.util.List;
 @RestController
 @RequestMapping("/appointments")
 public class AppointmentController { //http://localhost:8080/appointments
-
+//@Autowired
+//private AppointmentService appointmentService;
 
     private final AppointmentService appointmentService;
 
