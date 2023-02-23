@@ -24,29 +24,29 @@ public class DoctorController {//http://localhost:8080/doctors
     private DoctorService doctorService;
 
     // dr ekle
-@PostMapping
-public ResponseEntity<String> saveDoctor(@Valid @RequestBody Doctor doctor){
-    doctorService.saveDoctor(doctor);
-    return ResponseEntity.ok("creating successfull");
-}
+    @PostMapping
+    public ResponseEntity<String> saveDoctor(@Valid @RequestBody Doctor doctor){
+        doctorService.saveDoctor(doctor);
+        return ResponseEntity.ok("creating successfull");
+    }
 //bütün dr getir
 
 
 
-  @GetMapping("/List")
-  public ResponseEntity<List<Doctor>> getAllList(){
-    List<Doctor> list=doctorService.getAllList();
-    return ResponseEntity.ok(list);
-  }
-  //Id ile görüntüleme
+    @GetMapping("/List")
+    public ResponseEntity<List<Doctor>> getAllList(){
+        List<Doctor> list=doctorService.getAllList();
+        return ResponseEntity.ok(list);
+    }
+    //Id ile görüntüleme
     @GetMapping("/{id}")
     public ResponseEntity<Doctor> getDoctorById(@PathVariable("id") Long id){
-    Doctor doctor=doctorService.findDoctor(id);
-    return ResponseEntity.ok(doctor);
+        Doctor doctor=doctorService.findDoctor(id);
+        return ResponseEntity.ok(doctor);
     }
 
 
-//dr sil
+    //dr sil
     @DeleteMapping("/{id}")
     public ResponseEntity<String> deleteDoctor(@PathVariable("id") Long id){
         doctorService.deleteDoctor(id);
@@ -57,7 +57,7 @@ public ResponseEntity<String> saveDoctor(@Valid @RequestBody Doctor doctor){
     @PutMapping("{id}")
     public ResponseEntity<Map<String,String>> updateDoctor(@PathVariable("id")Long id,
                                                            @Valid @RequestBody DoctorDTO doctorDTO){
-    doctorService.updateDoctor(id,doctorDTO);
+        doctorService.updateDoctor(id,doctorDTO);
         Map<String,String> map = new HashMap<>();
         map.put("message","Doctor is updated successfuly");
         map.put("status" ,"true");
@@ -67,5 +67,3 @@ public ResponseEntity<String> saveDoctor(@Valid @RequestBody Doctor doctor){
 
 
 }
-
-

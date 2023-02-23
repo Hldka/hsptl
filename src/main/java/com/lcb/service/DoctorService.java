@@ -15,8 +15,8 @@ import java.util.List;
 @Service
 public class DoctorService {
 
-@Autowired
-private DoctorRepository doctorRepository;
+    @Autowired
+    private DoctorRepository doctorRepository;
     public void deleteDoctor(Long id) {
         Doctor doctor=doctorRepository.findById(id).
                 orElseThrow(()->new ResourceNotFoundException("Doctor not found"));
